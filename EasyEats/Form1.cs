@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -43,12 +43,18 @@ namespace EasyEats
                     string[] split = readfile[i].Split(';'); // split the line
                     listBox1.Items.Add(split[0] + split[1] + " $" + split[2]); //show the line on the screen
                     listBox2.Items.Add(split[0] + split[1] + " $" + split[2]);
-                    listBox3.Items.Add(split[0] + split[1] + " $" + split[2]);
+                    if (split[1] != "0")
+                    {
+                        listBox3.Items.Add(split[0] + split[1] + " $" + split[2]);
+                    }
                 }
             }
-            if (selectedIndex != -1)
-            {
+            try {
                 listBox1.SelectedIndex = selectedIndex;
+            }
+            catch (Exception e)
+            {
+
             }
 
             //listBox2.SelectedIndex = -1;
@@ -193,7 +199,9 @@ namespace EasyEats
             for (int i = 0; i < readlines.Length; i++)
             {
                 string[] line = readlines[i].Split(';');
-                subtotal += Convert.ToDouble(line[2]);
+                
+                subtotal += Convert.ToDouble(line[2]) * Convert.ToDouble(line[1]);
+                
             }
             label3.Text = "Sub-Total: $" + subtotal;
 
